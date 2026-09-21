@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PushPushServer.DTO;
+using PushPushServer.Services;
 
 namespace PushPushServer.Controllers
 {
@@ -7,10 +9,39 @@ namespace PushPushServer.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        //로그인 userId DB 조회
-        //존재하면 음... 뭔가 유저 고유 키값 필요..
-        //없으면 만들어줌
-        //토큰 만들어서 내려줌
-        //유저 고유 키값으로 나머지 데이터 처리 필요함...
+        private readonly UserService _userService;
+        private readonly SessionService _sessionService;
+
+        public LoginController(UserService userService, SessionService sessionService)
+        {
+            _userService = userService;
+            _sessionService = sessionService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
+        {
+            var user = await _userService.LoginAsync(request.UserId);
+            if (user == null)
+                return BaseResponse.Fail<LoginResponse>(ResultCode.UserNotFound, "계정이 존재하지 않습니다");
+
+            //계정 있으면 로그인
+            var userToken = await _sessionService.CreateAsync(user.Uid);
+
+            return new LoginResponse { token = userToken, friendCode = user.FriendCode, nickName = user.NickName };
+        }
+
+        [HttpPost("create")]
+        public async Task<ActionResult<LoginResponse>> Create([FromBody] CreateRequest request)
+        {
+            var user = await _userService.CreateAsync(request.UserId, request.NickName);
+
+            if (user == null)
+                return BaseResponse.Fail<LoginResponse>(ResultCode.CreateUserFail);
+
+            var userToken = await _sessionService.CreateAsync(user.Uid);
+
+            return new LoginResponse { token = userToken, friendCode = user.FriendCode, nickName = user.NickName };
+        }
     }
 }
