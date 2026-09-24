@@ -13,8 +13,6 @@ namespace PushPushServer.DTO
     public class LoginResponse : BaseResponse
     {
         public string token = "";
-        public string friendCode = "";
-        public string nickName = "";
     };
 
     public class CreateRequest

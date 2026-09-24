@@ -28,7 +28,7 @@ namespace PushPushServer.Controllers
             //계정 있으면 로그인
             var userToken = await _sessionService.CreateAsync(user.Uid);
 
-            return new LoginResponse { token = userToken, friendCode = user.FriendCode, nickName = user.NickName };
+            return new LoginResponse { token = userToken };
         }
 
         [HttpPost("create")]
@@ -41,7 +41,7 @@ namespace PushPushServer.Controllers
 
             var userToken = await _sessionService.CreateAsync(user.Uid);
 
-            return new LoginResponse { token = userToken, friendCode = user.FriendCode, nickName = user.NickName };
+            return new LoginResponse { token = userToken};
         }
     }
 }

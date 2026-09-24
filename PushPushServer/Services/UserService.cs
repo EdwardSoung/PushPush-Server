@@ -60,5 +60,13 @@ namespace PushPushServer.Services
 
         private static bool IsDuplicateKey(DbUpdateException ex)
             => ex.InnerException is MySqlException { ErrorCode: MySqlErrorCode.DuplicateKeyEntry };
+
+        public async Task<User?> GetUserData(long uid)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Uid == uid);
+            if (user == null) return null;
+
+            return user;
+        }
     }
 }
