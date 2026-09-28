@@ -1,6 +1,21 @@
-@PushPushServer_HostAddress = http://localhost:5041
+﻿@PushPushServer_HostAddress = http://localhost:5241
 
 GET {{PushPushServer_HostAddress}}/weatherforecast/
 Accept: application/json
 
-###
+### 로그인 (신규 생성)
+POST {{PushPushServer_HostAddress}}/api/login
+Content-Type: application/json
+
+{
+  "userId": "testuser01",
+  "nickName":"테스터"
+}
+
+### 로그인 (검증 실패 - 너무 짧은 ID)
+POST {{PushPushServer_HostAddress}}/api/login
+Content-Type: application/json
+
+{
+  "userId": "ab"
+}
