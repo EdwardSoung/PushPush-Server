@@ -38,6 +38,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(
 
 builder.Services.AddSingleton<SessionService>();
 builder.Services.AddScoped<UserService>();   // DbContext를 쓰므로 Scoped
+builder.Services.AddScoped<ItemService>();
 
 var app = builder.Build();
 

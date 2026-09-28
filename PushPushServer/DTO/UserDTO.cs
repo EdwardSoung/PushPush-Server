@@ -2,12 +2,12 @@
 {
     public class UserInfoRequest
     {
-        public string token = "";
+        public string token { get; set; } = "";
     }
     public class UserInfoResponse : BaseResponse
     {
-        public string friendCode = "";
-        public string nickName = "";
-        public long exp = 0;
+        public string friendCode { get; set; } = ""; 
+        public string nickName { get; set; } = "";
+        public long exp { get; set; } = 0;
     }
 }

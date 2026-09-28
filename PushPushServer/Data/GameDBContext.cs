@@ -8,6 +8,7 @@ namespace PushPushServer.Data
         public GameDBContext(DbContextOptions<GameDBContext> options) : base(options) { }
 
         public DbSet<User> Users => Set<User>();
+        public DbSet<Item> Items => Set<Item>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

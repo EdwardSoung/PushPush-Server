@@ -12,7 +12,7 @@ namespace PushPushServer.DTO
 
     public class LoginResponse : BaseResponse
     {
-        public string token = "";
+        public string Token { get; set; } = "";
     };
 
     public class CreateRequest
